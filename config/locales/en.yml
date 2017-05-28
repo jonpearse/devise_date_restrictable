@@ -1,0 +1,5 @@
+en:
+  devise:
+    failure:
+      user:
+        account_date_restricted: "Your account is not currently active: please contact an administrator for more information"
