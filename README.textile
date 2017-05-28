@@ -1,0 +1,42 @@
+h1. Devise Date Restrictable
+
+This is a module for "Devise":https://github.com/plataformatec/devise that allows a user account to be restricted by date range.
+
+h2. Installation + Setup
+
+Add the following line to your application’s Gemfile:
+
+<pre><code>gem 'devise_date_restrictable'</code></pre>
+
+And then run @bundle install@.
+
+Next, you will need to generate an ActiveRecord migration and run that migration.
+
+<pre><code>$ rails generate devise_date_restrictable --model MODEL
+rake db:migrate</code></pre>
+
+Finally, add @:date_restrictable@ to the devise line of your model, for instance:
+
+<pre><code>devise :database_authenticatable, :registerable, :recoverable, :rememberable, :trackable, :date_restrictable</code></pre>
+
+h2. Usage
+
+This gem adds two @DATE@ fields to your account model: @valid_from@ and @valid_until@. One or both may be specified in order to restrict an account’s ability to log in.
+If neither is specified, the user will be able to log in without restriction.
+
+Note that dates are _inclusive_: that is, setting an account to be valid *from* 2017-05-28 means they will be able to log in from midnight on 2017-05-28. Similarly, setting an account to be valid *until* 2017-05-27 means they will be able to log in until 23.59.59 on that date.
+At this time, all restrictions are based on server time—no provision has been made, as yet, for different timezones.
+
+h2. To-do
+
+This has been fairly quickly bashed together for use within a project, therefore isn’t perhaps as polished as it might be. At some point, I might get around to implementing some of the following:
+
+* add support for timezones
+* add helper methods to the account object to facilitate easier management (eg. @user.set_valid_for(3.years)@, and the like)
+* support for better messaging
+
+h2. Version History
+
+h3. 0.0.1 _(May 28th, 2017)_
+
+* initial release
