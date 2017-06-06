@@ -37,6 +37,10 @@ This has been fairly quickly bashed together for use within a project, therefore
 
 h2. Version History
 
+h3. 0.0.2 _(June 6th. 2017)_
+
+* removing errant debug output
+
 h3. 0.0.1 _(May 28th, 2017)_
 
 * initial release
