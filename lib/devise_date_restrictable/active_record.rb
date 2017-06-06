@@ -6,10 +6,6 @@ module Devise
       def date_restricted?
         now = Date.today
 
-        puts now.inspect
-        puts valid_from.nil?.inspect
-        puts valid_until.nil?.inspect
-
         !((valid_from.nil? or now >= valid_from) and (valid_until.nil? or now <= valid_until))
       end
 
