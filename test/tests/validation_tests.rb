@@ -33,4 +33,14 @@ class ValidationTests < ActiveSupport::TestCase
     assert_not( User.new( valid_from: Date.today, valid_until: ( Date.today - 1.day )).valid? )
 
   end
+
+  # Check messaging while we’re here
+  test 'ensure the validation message looks sane' do
+
+    user = User.new( valid_from: Date.today, valid_until: ( Date.today - 1.day ))
+    user.validate
+
+    assert_equal( user.errors.messages[:valid_until].first, 'Cannot be before Valid from' )
+
+  end
 end

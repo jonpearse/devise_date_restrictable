@@ -42,7 +42,12 @@ module Devise
           return if valid_from.blank? or valid_until.blank?
 
           # otherwise…
-          errors.add( :valid_until, :must_be_on_or_after ) unless valid_until.to_date >= valid_from.to_date
+          unless valid_until.to_date >= valid_from.to_date
+
+            field_name = self.class.human_attribute_name( :valid_from )
+            errors.add( :valid_until, :must_be_on_or_after, { field: field_name })
+
+          end
 
         end
     end
