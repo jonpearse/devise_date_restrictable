@@ -21,26 +21,63 @@ Finally, add @:date_restrictable@ to the devise line of your model, for instance
 
 h2. Usage
 
-This gem adds two @DATE@ fields to your account model: @valid_from@ and @valid_until@. One or both may be specified in order to restrict an account’s ability to log in.
-If neither is specified, the user will be able to log in without restriction.
+This gem adds two @DATE@ fields to your model: @valid_from@ and @valid_until@. One or both may be specified in order to
+restrict a user’s ability to log in either before- or after a particular date, or within a given date range.
+If neither is specified, the user will be able to log in without restriction as before.
 
-Note that dates are _inclusive_: that is, setting an account to be valid *from* 2017-05-28 means they will be able to log in from midnight on 2017-05-28. Similarly, setting an account to be valid *until* 2017-05-27 means they will be able to log in until 23.59.59 on that date.
-At this time, all restrictions are based on server time—no provision has been made, as yet, for different timezones.
+Note that dates are _inclusive_, that is:
 
-h2. To-do
+- if @valid_from@ is specified, the user will be able to log in after 00:00:00 on that date
+- if @valid_until@ is specified, the user will be able to log in until 23:59:59 on that date
 
-This has been fairly quickly bashed together for use within a project, therefore isn’t perhaps as polished as it might be. At some point, I might get around to implementing some of the following:
+Note that this gem is not timezone-aware, and therefore the server’s local time will be used for everything. I plan to modify this in a later release.
 
-* add support for timezones
-* add helper methods to the account object to facilitate easier management (eg. @user.set_valid_for(3.years)@, and the like)
-* support for better messaging
+This gem also provides basic validation to ensure that if @valid_from@ and @valid_until@ are provided, they make sense
+chronologically.
+
+h3. Localisation
+
+This gem provides two localisable strings:
+
+*Authentication failure*
+Shown to the user if their account has been restricted by date. This follows Devise convention, will search the following I18n keys:
+
+<pre>devise.failure.[model].account_date_restricted
+devise.failure.account_date_restricted</pre>
+
+*Date validation failure*
+Shown if you attempt to set a user’s @valid_from@ to be after @valid_until@. This follows ActiveRecord error convention, and will search the following I18n keys:
+
+<pre>activerecord.errors.models.[model].attributes.valid_until.must_be_on_or_after
+activerecord.errors.models.[model].must_be_on_or_after
+activerecord.errors.messages.must_be_on_or_after
+errors.attributes.valid_until.must_be_on_or_after
+errors.messages.must_be_on_or_after</pre>
+
+The "human-readable":http://guides.rubyonrails.org/i18n.html#translations-for-active-record-models name of the @valid_from@ field is available to these translations as @:field@.)
 
 h2. Version History
 
-h3. 0.0.2 _(June 6th. 2017)_
+*1.0.0 _(May 23rd, 2018)_*
+
+* [fix] added ActiveRecord::Migration version number to migration template
+* added basic date validation (it is no longer possible to punch holes in space/time with this gem, sorry)
+* added unit tests
+* general tidying for release.
+
+*0.0.2 _(June 6th, 2017)_*
 
 * removing errant debug output
 
-h3. 0.0.1 _(May 28th, 2017)_
+*0.0.1 _(May 28th, 2017)_*
 
 * initial release
+
+h2. Contributing
+
+Go for it! I’ll happily accept any sensible pull requests :)
+
+h2. Obligatory sales pitch
+
+When I’m not hacking at random gems, I’m a freelance web developer specialising in all things front-end, based in the beautiful city of Cardiff, UK.
+I’m usually kept fairly busy with project work, but I’m always on the lookout for new people to do cool stuff with. "Drop me a line":mailto:hello@jonpearse.net – I’d love to hear from you!
