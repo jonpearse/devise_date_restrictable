@@ -40,7 +40,7 @@ class DeviseDateRestrictableGenerator < Rails::Generators::Base
 
     end
 
-    puts "Make sure to add :date_restrictable to the devise line of your #{@model_name} model file."
+    puts "\n\nMake sure to add :date_restrictable to the devise line of your #{@model_name} model file!\n\n"
 
   end
 
