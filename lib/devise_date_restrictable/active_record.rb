@@ -37,13 +37,6 @@ module Devise
 
       end
 
-      # Hook into lockable: verifies whether the user is locked for any reason.
-      def access_locked?
-
-        super && date_restricted?
-
-      end
-
       # Hook into authenticatable: verifies whether the user is available for authentication.
       def active_for_authentication?
 
